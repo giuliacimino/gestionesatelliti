@@ -19,37 +19,37 @@ import it.prova.gestionesatelliti.repository.SatelliteRepository;
 @Service
 public class SatelliteServiceImpl implements SatelliteService {
 	@Autowired
-	private SatelliteRepository repository;
+	private SatelliteRepository SatelliteRepository;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Satellite> listAllElements() {
-		return (List<Satellite>) repository.findAll();
+		return (List<Satellite>) SatelliteRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Satellite caricaSingoloElemento(Long id) {
-		return repository.findById(id).orElse(null);
+		return SatelliteRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void aggiorna(Satellite satelliteInstance) {
-		repository.save(satelliteInstance);
+		SatelliteRepository.save(satelliteInstance);
 
 	}
 
 	@Override
 	@Transactional
 	public void inserisci(Satellite satelliteInstance) {
-		repository.save(satelliteInstance);
+		SatelliteRepository.save(satelliteInstance);
 	}
 
 	@Override
 	@Transactional
 	public void rimuovi(Long idSatellite) {
-		repository.deleteById(idSatellite);
+		SatelliteRepository.deleteById(idSatellite);
 
 	}
 
@@ -78,7 +78,17 @@ public class SatelliteServiceImpl implements SatelliteService {
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
-		return repository.findAll(specificationCriteria);
+		return SatelliteRepository.findAll(specificationCriteria);
+	}
+
+	@Override
+	@Transactional
+	public void lancio(LocalDate now, StatoSatellite stato, Long id) {
+		now= LocalDate.now();
+		stato= StatoSatellite.IN_MOVIMENTO;
+		SatelliteRepository.lancio(now, stato, id);
+		
+		
 	}
 
 }

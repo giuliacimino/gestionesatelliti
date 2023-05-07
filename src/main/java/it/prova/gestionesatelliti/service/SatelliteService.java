@@ -19,6 +19,8 @@ public List<Satellite> listAllElements();
 	
 	public List<Satellite> findByExample(Satellite example);
 	
+	public void lancio (LocalDate now, StatoSatellite stato, Long id);
+	
 
 
 }

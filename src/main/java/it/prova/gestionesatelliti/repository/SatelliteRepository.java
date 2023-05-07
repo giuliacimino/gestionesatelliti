@@ -12,4 +12,8 @@ import it.prova.gestionesatelliti.model.StatoSatellite;
 
 public interface SatelliteRepository extends CrudRepository<Satellite, Long>, JpaSpecificationExecutor<Satellite> {
 	
+	@Modifying
+	@Query(value = "update Satellite s set s.dataLancio = ?1,s.stato = ?2 where id = ?3 ")
+	public void lancio (LocalDate now, StatoSatellite stato, Long id);
+	
 }
