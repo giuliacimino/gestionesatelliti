@@ -146,5 +146,18 @@ public class SatelliteController {
 	}
 	
 	
-
+	
+	@GetMapping("/lanciatidapiudidueanni")
+	public ModelAndView trotrovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(LocalDate dataLancio, StatoSatellite stato) {
+		ModelAndView mv = new ModelAndView();
+		List<Satellite> results = satelliteService.trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(dataLancio, stato);
+		mv.addObject("satellite_list_attribute", results);
+		mv.setViewName("satellite/list");
+		return mv;
+	}
+	
+	
+	
 }
+
+

@@ -100,4 +100,13 @@ public class SatelliteServiceImpl implements SatelliteService {
 		;
 
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Satellite> trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(LocalDate dataLancio,
+			StatoSatellite stato) {
+		dataLancio= LocalDate.of(2021, 05, 07);
+		stato= StatoSatellite.DISATTIVATO;
+		return SatelliteRepository.findByDataLancioGreaterThanAndStatoLike(dataLancio, stato);
+	}
 }

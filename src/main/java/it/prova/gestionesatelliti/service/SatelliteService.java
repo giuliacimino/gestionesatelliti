@@ -23,6 +23,8 @@ public List<Satellite> listAllElements();
 	
 	public void rientro (LocalDate now, StatoSatellite stato, Long id);
 	
+	public List<Satellite> trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati (LocalDate dataLancio, StatoSatellite stato);
+	
 
 
 }
