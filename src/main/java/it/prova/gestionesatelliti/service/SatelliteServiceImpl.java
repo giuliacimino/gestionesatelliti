@@ -91,4 +91,13 @@ public class SatelliteServiceImpl implements SatelliteService {
 		
 	}
 
+	@Override
+	@Transactional
+	public void rientro(LocalDate now, StatoSatellite stato, Long id) {
+		now = LocalDate.now();
+		stato = StatoSatellite.DISATTIVATO;
+		SatelliteRepository.rientro(now, stato, id);
+		;
+
+	}
 }

@@ -16,4 +16,8 @@ public interface SatelliteRepository extends CrudRepository<Satellite, Long>, Jp
 	@Query(value = "update Satellite s set s.dataLancio = ?1,s.stato = ?2 where id = ?3 ")
 	public void lancio (LocalDate now, StatoSatellite stato, Long id);
 	
+	@Modifying
+	@Query(value = "update Satellite s set s.dataRientro = ?1 , s.stato =?2 where id = ?3")
+	public void rientro(LocalDate now, StatoSatellite stato, Long id);
+	
 }

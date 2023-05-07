@@ -21,6 +21,8 @@ public List<Satellite> listAllElements();
 	
 	public void lancio (LocalDate now, StatoSatellite stato, Long id);
 	
+	public void rientro (LocalDate now, StatoSatellite stato, Long id);
+	
 
 
 }
