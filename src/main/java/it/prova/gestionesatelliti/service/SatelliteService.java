@@ -25,6 +25,11 @@ public List<Satellite> listAllElements();
 	
 	public List<Satellite> trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati (LocalDate dataLancio, StatoSatellite stato);
 	
+	public List<Satellite> trovaSatellitiDisattivatiMaNonRientrati (StatoSatellite stato);
+	
+	public List<Satellite> trovaInOrbitaDieciAnniEFissi (LocalDate dataLancio, StatoSatellite stato);
+	
+	
 
 
 }

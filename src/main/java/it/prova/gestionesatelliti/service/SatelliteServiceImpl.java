@@ -19,37 +19,37 @@ import it.prova.gestionesatelliti.repository.SatelliteRepository;
 @Service
 public class SatelliteServiceImpl implements SatelliteService {
 	@Autowired
-	private SatelliteRepository SatelliteRepository;
+	private SatelliteRepository satelliteRepository;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Satellite> listAllElements() {
-		return (List<Satellite>) SatelliteRepository.findAll();
+		return (List<Satellite>) satelliteRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Satellite caricaSingoloElemento(Long id) {
-		return SatelliteRepository.findById(id).orElse(null);
+		return satelliteRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void aggiorna(Satellite satelliteInstance) {
-		SatelliteRepository.save(satelliteInstance);
+		satelliteRepository.save(satelliteInstance);
 
 	}
 
 	@Override
 	@Transactional
 	public void inserisci(Satellite satelliteInstance) {
-		SatelliteRepository.save(satelliteInstance);
+		satelliteRepository.save(satelliteInstance);
 	}
 
 	@Override
 	@Transactional
 	public void rimuovi(Long idSatellite) {
-		SatelliteRepository.deleteById(idSatellite);
+		satelliteRepository.deleteById(idSatellite);
 
 	}
 
@@ -78,7 +78,7 @@ public class SatelliteServiceImpl implements SatelliteService {
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
-		return SatelliteRepository.findAll(specificationCriteria);
+		return satelliteRepository.findAll(specificationCriteria);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SatelliteServiceImpl implements SatelliteService {
 	public void lancio(LocalDate now, StatoSatellite stato, Long id) {
 		now= LocalDate.now();
 		stato= StatoSatellite.IN_MOVIMENTO;
-		SatelliteRepository.lancio(now, stato, id);
+		satelliteRepository.lancio(now, stato, id);
 		
 		
 	}
@@ -96,7 +96,7 @@ public class SatelliteServiceImpl implements SatelliteService {
 	public void rientro(LocalDate now, StatoSatellite stato, Long id) {
 		now = LocalDate.now();
 		stato = StatoSatellite.DISATTIVATO;
-		SatelliteRepository.rientro(now, stato, id);
+		satelliteRepository.rientro(now, stato, id);
 		;
 
 	}
@@ -107,6 +107,20 @@ public class SatelliteServiceImpl implements SatelliteService {
 			StatoSatellite stato) {
 		dataLancio= LocalDate.of(2021, 05, 07);
 		stato= StatoSatellite.DISATTIVATO;
-		return SatelliteRepository.findByDataLancioGreaterThanAndStatoLike(dataLancio, stato);
+		return satelliteRepository.findByDataLancioGreaterThanAndStatoLike(dataLancio, stato);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Satellite> trovaSatellitiDisattivatiMaNonRientrati(StatoSatellite stato) {
+		stato= StatoSatellite.DISATTIVATO;
+		return satelliteRepository.findByStatoDisattivatoAndDataRientroNull(stato);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Satellite> trovaInOrbitaDieciAnniEFissi(LocalDate dataLancio, StatoSatellite stato) {
+		return satelliteRepository.findAllByDataLancioBeforeAndStato(LocalDate.of(2013, 05, 07), StatoSatellite.FISSO);
+		
 	}
 }

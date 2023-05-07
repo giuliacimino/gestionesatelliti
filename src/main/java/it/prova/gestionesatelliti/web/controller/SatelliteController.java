@@ -148,9 +148,27 @@ public class SatelliteController {
 	
 	
 	@GetMapping("/lanciatidapiudidueanni")
-	public ModelAndView trotrovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(LocalDate dataLancio, StatoSatellite stato) {
+	public ModelAndView trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(LocalDate dataLancio, StatoSatellite stato) {
 		ModelAndView mv = new ModelAndView();
 		List<Satellite> results = satelliteService.trovaSatellitiLanciatiDaPiuDiDueAnniNonDisattivati(dataLancio, stato);
+		mv.addObject("satellite_list_attribute", results);
+		mv.setViewName("satellite/list");
+		return mv;
+	}
+	
+	@GetMapping("/disattivatimanonrientrati")
+	public ModelAndView trovaSatellitiDisattivatiMaNonRientrati (StatoSatellite stato) {
+		ModelAndView mv = new ModelAndView();
+		List<Satellite> results= satelliteService.trovaSatellitiDisattivatiMaNonRientrati(stato);
+		mv.addObject("satellite_list_attribute", results);
+		mv.setViewName("satellite/list");
+		return mv;
+	}
+	
+	@GetMapping("/piudidieciannifissi")
+	public ModelAndView trovaInOrbitaDieciAnniEFissi(LocalDate dataLancio, StatoSatellite stato) {
+		ModelAndView mv= new ModelAndView();
+		List<Satellite> results= satelliteService.trovaInOrbitaDieciAnniEFissi(dataLancio, stato);
 		mv.addObject("satellite_list_attribute", results);
 		mv.setViewName("satellite/list");
 		return mv;

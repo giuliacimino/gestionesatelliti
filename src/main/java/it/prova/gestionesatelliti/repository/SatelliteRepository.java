@@ -24,4 +24,9 @@ public interface SatelliteRepository extends CrudRepository<Satellite, Long>, Jp
 	@Query(value = "select s from Satellite s where dataLancio < ?1 and stato != ?2")
 	public List<Satellite> findByDataLancioGreaterThanAndStatoLike (LocalDate dataLancio, StatoSatellite stato);
 	
+	@Query (value = "select s from Satellite s where dataRientro = null and stato = ?1")
+	public List<Satellite> findByStatoDisattivatoAndDataRientroNull (StatoSatellite stato);
+	
+	public List<Satellite> findAllByDataLancioBeforeAndStato (LocalDate dataLancio, StatoSatellite stato);
+	
 }
