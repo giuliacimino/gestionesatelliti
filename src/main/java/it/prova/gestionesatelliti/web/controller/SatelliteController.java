@@ -174,6 +174,30 @@ public class SatelliteController {
 		return mv;
 	}
 	
+	@GetMapping("/emergenza")
+	public ModelAndView partitiMaNonRientratiAttivi () {
+		ModelAndView mv= new ModelAndView();
+		int vociNelSistema= satelliteService.listAllElements().size();
+		int results= satelliteService.partitiMaNonRientratiAttivi().size();
+		List<Satellite> satellitiCheVerrannoMoificati= satelliteService.partitiMaNonRientratiAttivi();
+		mv.addObject("satellite_lista_attribute",vociNelSistema);
+		mv.addObject("satellite_size_list_attribute", results);
+		mv.addObject("satellite_emergenza_attr", satellitiCheVerrannoMoificati);
+		
+		mv.setViewName("satellite/emergenza");
+		return mv;
+		
+	}
+	
+	@PostMapping("/emergenza")
+	public String emergenza (LocalDate dataRientro, StatoSatellite stato, RedirectAttributes redirectAttrs) {
+		satelliteService.effettuaEmergenza(dataRientro, stato);
+		redirectAttrs.addFlashAttribute("successMessage", "emergenza effettuata");
+		return "redirect:/home";
+		
+		
+	}
+	
 	
 	
 }

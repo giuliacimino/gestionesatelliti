@@ -29,6 +29,9 @@ public List<Satellite> listAllElements();
 	
 	public List<Satellite> trovaInOrbitaDieciAnniEFissi (LocalDate dataLancio, StatoSatellite stato);
 	
+	public List<Satellite> partitiMaNonRientratiAttivi ();	
+	
+	public void effettuaEmergenza (LocalDate dataRientro, StatoSatellite stato);
 	
 
 

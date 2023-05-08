@@ -29,4 +29,12 @@ public interface SatelliteRepository extends CrudRepository<Satellite, Long>, Jp
 	
 	public List<Satellite> findAllByDataLancioBeforeAndStato (LocalDate dataLancio, StatoSatellite stato);
 	
+	@Query(value = "select s from Satellite s where dataRientro = null and stato != ?1")
+	public List<Satellite> partitiMaNonRientratiAttivi (StatoSatellite stato);
+	
+	@Modifying
+	@Query(value = "update Satellite s set s.dataRientro = ?1, s.stato= ?2")
+	public void effettuaEmergenza (LocalDate dataRientro, StatoSatellite stato);
+	
+	
 }

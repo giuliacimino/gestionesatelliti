@@ -123,4 +123,26 @@ public class SatelliteServiceImpl implements SatelliteService {
 		return satelliteRepository.findAllByDataLancioBeforeAndStato(LocalDate.of(2013, 05, 07), StatoSatellite.FISSO);
 		
 	}
-}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Satellite> partitiMaNonRientratiAttivi() {
+			StatoSatellite stato= StatoSatellite.DISATTIVATO;
+			return satelliteRepository.partitiMaNonRientratiAttivi(stato);
+	}
+
+	@Override
+	@Transactional
+	public void effettuaEmergenza(LocalDate dataRientro, StatoSatellite stato) {
+		dataRientro= LocalDate.now();
+		stato= StatoSatellite.DISATTIVATO;
+		satelliteRepository.effettuaEmergenza(dataRientro, stato);
+		
+		
+	}
+
+
+		
+		
+	}
+
